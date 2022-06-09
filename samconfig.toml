@@ -1,0 +1,13 @@
+version = 0.1
+[Staging]
+[Staging.deploy]
+[Staging.deploy.parameters]
+stack_name = "CodebuildProjectStudio-EKS"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1kz145fcq4wmb"
+s3_prefix = "CodebuildProjectStudio"
+region = "eu-central-1"
+profile = "lab09"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM CAPABILITY_AUTO_EXPAND CAPABILITY_NAMED_IAM"
+parameter_overrides = "ProjectName=\"CodeBuildProjectStudio\" Environment=\"Staging\""
+image_repositories = []
