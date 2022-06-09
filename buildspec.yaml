@@ -8,5 +8,5 @@ phases:
   post_build:
     commands:
       - |
-        sam deploy --config-env Staging --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND CAPABILITY_NAMED_IAM 
+        sam deploy --config-env Staging --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND CAPABILITY_NAMED_IAM --guided
         
