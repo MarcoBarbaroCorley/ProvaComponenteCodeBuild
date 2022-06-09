@@ -8,5 +8,5 @@ phases:
   post_build:
     commands:
       - |
-        sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+        sam deploy --config-env Staging --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND CAPABILITY_NAMED_IAM 
         
