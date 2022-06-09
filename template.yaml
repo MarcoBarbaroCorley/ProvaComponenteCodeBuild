@@ -1,0 +1,94 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Parameters:
+
+  SecretName:
+    Type: String
+    Default: across-secret
+  ProjectName:
+    Type: String
+    Description: Nome del progetto
+    Default: across
+  Environment:
+    Type: String
+    Default: Staging
+  AmiType:
+    Type: String
+    Description: "AL2_x86_64 or AL2_x86_64_GPU"
+    Default: AL2_x86_64 
+  InstanceType:
+    Type: String
+    Default: t3.medium
+    Description: Istance Type with Nodegroup1
+  InstanceType2:
+    Type: String
+    Default: t3.small
+    Description: Instance Type with Nodegroup2
+  KubernetesVersion:
+    Type: String
+    Description: "Kubernetes version eg: 1.17"
+    Default: "1.22"
+  GroupName1:
+    Type: String
+    Default: "test1"
+    Description: "A unique worker group name"
+  GroupName2:
+    Type: String
+    Default: "test2"
+    Description: "A unique worker group name"
+  DocuDBInstanceClass:
+    Type: String
+    Default: db.t4g.medium
+  DBClassRDS:
+    Type: String
+    Description: Class Rds
+    Default: db.m5.large
+  DBAllocatedStorage:
+    Type: Number
+    Description: Storage RDS
+    Default: 200
+  DBNameAcross:
+    Type: String
+    Description: DB name
+    Default: AcrossDB
+  DomainName:
+    Type: String
+    Description: ElasticSearch Domain Name
+    Default: acrossdomain
+  InstanceCount:
+    Type: Number
+    Description: Instance count
+    Default: 2
+  InstanceTypeElastic:
+    Type: String
+    Description: Instance type
+    Default: m3.medium.elasticsearch
+  VolumeSize:
+    Type: Number
+    Description: Volume size in GB
+    Default: 100
+  KmsKeyArn:
+    Type: String
+    Default: ""
+  CertificateId:
+    Type: String
+    Default: ""
+
+Resources:
+
+  EKS: 
+    Type: AWS::Serverless::Application
+    Properties:
+      Location: ./infrastructure/EKS.yaml
+      Parameters:
+        ProjectName: !Ref ProjectName
+        Environment: !Ref Environment
+        VPCId: !ImportValue 
+        SubnetPrivate1: !ImportValue "CodeBuildProjectSubnetPublic1"
+        SubnetPrivate2: !ImportValue "CodeBuildProjectSubnetPublic2"
+        AmiType: !Ref AmiType
+        InstanceType: !Ref InstanceType 
+        GroupName1: !Ref GroupName1
+        GroupName2: !Ref GroupName2
+        InstanceType2: !Ref InstanceType2
+        KubernetesVersion: !Ref KubernetesVersion

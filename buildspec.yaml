@@ -1,0 +1,12 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - sam build -t template.yaml
+
+  post_build:
+    commands:
+      - |
+        sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+        
